@@ -1,14 +1,4 @@
 start:
-	; [MQH] 3 Sep 2019
-	; When a the boot sector is loaded by BIOS. It will be loaded on the location 07C0h in the memory.
-	; What we do here is setting the register "ds" to the value "07C0" which is the same of the memory address we are on now.
-	; Our variable "hello_string" will be loaded as a part of the bootloader, when we use it in the line "mov si, hello_string"
-	; we're actually loading the memory address of the first character, let's assume that this memory address is (1000). Because
-	; it is considered as a "data" by the processor. This offset (the memory address of "hello_string") will be added to the data segment
-	; selector which resides in the register "ds". According to "Protected Mode Software Architecture", the initial value of "ds" is 0000h,
-	; so, if we keep "ds" as it is, the CPU is going to load the data from the memory 00001000, BUT we are actually on 07C0, so the data
-	; segment selector should be 07C0h so we can get the correct address of "hello_string" which is 07C01000 and not 00001000.
-	; For backward compatibility, when the bootloader starts, the execution environment will be in "Real Mode", 16-bit.
 	mov ax, 07C0h
 	mov ds, ax
 		
